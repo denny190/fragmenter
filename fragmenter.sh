@@ -11,14 +11,14 @@ fi
 
 LOGFILE="$1"
 if [ ! -f "$LOGFILE" ]; then
-  echo "Error: Log file '$LOGFILE' not found."
+  echo "[ERROR] Log file '$LOGFILE' not found."
   exit 1
 fi
 
 # Extract calculation archive using pluck and concatenate it into one line
 ARCHIVE=$(pluck "$LOGFILE" | tr -d '\n')
 if [ -z "$ARCHIVE" ]; then
-  echo "Error: Failed to extract calculation archive."
+  echo "[ERROR] Failed to extract calculation archive."
   exit 1
 fi
 
@@ -80,24 +80,24 @@ for ((i=1; i<=NUM_FRAGMENTS; i++)); do
 
   # Expand ranges into individual indices
   EXPANDED=$(expand_ranges "$FRAGMENT")
-  echo "Expansion: $EXPANDED"
+  echo "[DEBUG] Expansion: $EXPANDED"
   FRAGMENTS[$i]="$EXPANDED"
 
   # Remove assigned atoms from remaining list
   REMAINING_ATOMS=$(echo "$REMAINING_ATOMS" | tr ' ' '\n' | grep -v -w -F -f <(echo "$EXPANDED" | tr ' ' '\n') | tr '\n' ' ')
 
-  echo "Debug: Remaining atoms after assigning fragment $i: $REMAINING_ATOMS"
+  echo "[DEBUG] Remaining atoms after assigning fragment $i: $REMAINING_ATOMS"
 done
 
 # Echo fragments for debugging
-echo "Fragment 1:"
+echo "[DEBUG] Fragment 1:"
 echo "${FRAGMENTS[1]}"
 
-echo "Fragment 2:"
+echo "[DEBUG] Fragment 2:"
 echo "${FRAGMENTS[2]}"
 
 # Ask for the output filename
-echo "Enter the output GJF filename:"
+echo "Enter the output GJF filename (with extension):"
 read -r OUTPUT_FILE
 
 # Assemble the GJF file
