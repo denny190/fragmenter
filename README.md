@@ -1,0 +1,1 @@
+A helper script to disassemble the geometry output of a gaussian calculation into a new to a new input, with preserved fragment information, for counterpoise calculations. 
