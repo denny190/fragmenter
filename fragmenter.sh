@@ -23,7 +23,7 @@ fi
 METHOD=$(echo "$ARCHIVE" | grep -oP '(?<=\\#p ).+?(?=\\)')
 CHARGE=$(echo "$ARCHIVE" | grep -oP '(?<=\\)[-]?\d+(?=,)')
 MULTIPLICITY=$(echo "$ARCHIVE" | grep -oP '(?<=,)[-]?\d+(?=\\)')
-ATOMS=$(echo "$ARCHIVE" | grep -oP '[A-Z]+,[-.\d]+,[-.\d]+,[-.\d]+(?=\\)')
+ATOMS=$(echo "$ARCHIVE" | grep -oP '[A-Z][a-z]*,[-.\d]+,[-.\d]+,[-.\d]+(?=\\)')
 
 TOTAL_ATOMS=$(echo "$ATOMS" | wc -l)
 
@@ -170,7 +170,7 @@ else
 fi
 
 while true; do
-  echo "Enter the output GJF filename (with extension):"
+  echo "Enter the output GJF filename (!without extension!):"
   read -r OUTPUT_FILE
   if [ -n "$OUTPUT_FILE" ]; then
     break
@@ -202,6 +202,6 @@ done
 
   echo ""
   echo ""
-} > "$OUTPUT_FILE"
+} > "$OUTPUT_FILE.gjf"
 
 echo "GJF file '$OUTPUT_FILE' created successfully."
